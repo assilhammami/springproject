@@ -66,6 +66,11 @@ cr.deleteById(idChambre);
     public List<Chambre> retrieveChambresByReservation(Boolean valid) {
         return cr.retrieveChambresByReservation(valid);
     }
+    @Override
+    public long nbChambreParTypeEtBloc(TypeChambre type, long idBloc) {
+        return cr.countChambresByTypeAndBloc(type,idBloc);
+    }
+
 
 
 }
