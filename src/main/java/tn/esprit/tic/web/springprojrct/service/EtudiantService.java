@@ -1,17 +1,16 @@
 package tn.esprit.tic.web.springprojrct.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.tic.web.springprojrct.entities.Etudiant;
 import tn.esprit.tic.web.springprojrct.entities.Reservation;
-import tn.esprit.tic.web.springprojrct.entities.Tache;
 import tn.esprit.tic.web.springprojrct.repositories.EtudiantRepository;
 import tn.esprit.tic.web.springprojrct.repositories.ReservationRepository;
 import tn.esprit.tic.web.springprojrct.repositories.TacheRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -71,6 +70,25 @@ etr.deleteById(idEtudiant);
             result.put(nom+prenom,etudiant.getMontantInscription()-tarif);
 
         });
+        return result;
+    }
+
+    @Override
+    public HashMap<String, Float> calculNouveauMontantInscriptionDesEtudiantss() {
+        List<Etudiant> etudidants = etr.findAll();
+        HashMap<String,Float> result=new HashMap<>();
+        etudidants.forEach(etudiant -> {
+            String nom = etudiant.getNomEtudiant();
+            String prenom = etudiant.getPrenomEtudiant();
+            LocalDate datedebut = LocalDate.of(2024, 6, 6);
+            LocalDate datefin = LocalDate.of(2025, 6, 6);
+            float tarif=   tacheRepository.calculateTotalTarifHoraireBetweenDates(datedebut,datefin,etudiant.getIdEtudiant());
+            result.put(nom+prenom,etudiant.getMontantInscription()-tarif);
+            etudiant.setMontantInscription((long) (etudiant.getMontantInscription()-tarif));
+            etr.save(etudiant);
+
+        });
+
         return result;
     }
 

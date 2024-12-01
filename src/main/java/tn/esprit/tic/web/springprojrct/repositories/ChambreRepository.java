@@ -28,4 +28,17 @@ public interface ChambreRepository  extends JpaRepository<Chambre, Long> {
 
     @Query("SELECT COUNT(c) FROM Chambre c WHERE c.typeC = :typeChambre AND c.bloc.idBloc = :idBloc")
     Long countChambresByTypeAndBloc(@Param("typeChambre") TypeChambre typeChambre, @Param("idBloc") Long idBloc);
+
+
+
+    @Query("SELECT COUNT(c) FROM Chambre c WHERE c.typeC = :typeChambre")
+    Integer nbChambreParType(@Param("typeChambre") TypeChambre typeChambre);
+    @Query("SELECT COUNT(r) " +
+            "FROM Chambre c " +
+            "LEFT JOIN c.reservations r " +
+            "WHERE c.idChambre = :idChambre " +
+            "AND FUNCTION('YEAR', r.anneeUniversitaire) = FUNCTION('YEAR', CURRENT_DATE)")
+    Integer findReservationCountForCurrentYearByChambreId(@Param("idChambre") Long idChambre);
+
+
 }

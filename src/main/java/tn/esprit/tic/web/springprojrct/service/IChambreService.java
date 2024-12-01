@@ -1,6 +1,7 @@
 package tn.esprit.tic.web.springprojrct.service;
 
 import org.springframework.data.repository.query.Param;
+import org.springframework.scheduling.annotation.Scheduled;
 import tn.esprit.tic.web.springprojrct.entities.Chambre;
 import tn.esprit.tic.web.springprojrct.entities.TypeChambre;
 
@@ -23,6 +24,15 @@ public interface IChambreService {
         List<Chambre> retrieveChambresByNomBLocAndCapacite(@Param("capacite")  Long capacite,@Param("nom") String nom);
         List<Chambre> retrieveChambresByReservation(@Param("valid")  Boolean valid  );
         long nbChambreParTypeEtBloc(TypeChambre type, long idBloc);
+
+        void pourcentageChambreParTypeChambre();
+
+        @Scheduled(fixedRate = 60000)
+    void listeChambreParBloc();
+
+        @Scheduled(fixedRate = 60000)
+        void nbPlacesDisponiblesParChambreAnneeEnCours();
+
 }
 
 

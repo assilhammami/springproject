@@ -22,7 +22,7 @@ public class Bloc {
     private Long idBloc;
     private String nomBloc;
     private Long capaciteBloc;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="bloc")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="bloc",fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Chambre> chambres;
     @ManyToOne

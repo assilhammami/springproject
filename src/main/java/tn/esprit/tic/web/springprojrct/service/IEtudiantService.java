@@ -16,4 +16,5 @@ public interface IEtudiantService {
      Etudiant affecterEtudiantAReservation(String nomEt, String prenomEt, Long idReservation);
     HashMap<String,Float > calculNouveauMontantInscriptionDesEtudiants() ;
 
+    HashMap<String, Float> calculNouveauMontantInscriptionDesEtudiantss();
 }
